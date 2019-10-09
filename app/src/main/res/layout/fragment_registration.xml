@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorYellow">
+
+        <EditText
+            android:id="@+id/reg_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="46dp"
+            android:gravity="center"
+            android:hint="Имя"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textCapSentences"
+            android:selectAllOnFocus="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/reg_surname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:hint="Фамилия"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textCapSentences"
+            android:selectAllOnFocus="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_name"
+            />
+
+        <EditText
+            android:id="@+id/reg_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:hint="Электронная почта"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_surname"
+            />
+
+        <EditText
+            android:id="@+id/reg_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:hint="Пароль"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:lines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_email"
+            />
+
+        <EditText
+            android:id="@+id/reg_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:hint="Город"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textCapSentences"
+            android:selectAllOnFocus="true"
+            android:lines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_password"
+            />
+
+        <EditText
+            android:id="@+id/reg_birthday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="Дата рождения"
+            android:textSize="20sp"
+            android:maxEms="10"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="date"
+            android:selectAllOnFocus="true"
+            android:lines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_city"
+            android:enabled="true"/>
+
+        <Spinner
+            android:id="@+id/reg_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:textAlignment="center"
+            android:text="Выбрать навык"
+            android:textSize="20sp"
+            android:fontFamily="@font/b52"
+            android:textColorHint="@color/colorBlack"
+            android:inputType="textCapSentences"
+            android:selectAllOnFocus="true"
+            android:lines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_birthday"
+            android:spinnerMode="dropdown"
+            />
+
+        <Button
+            android:id="@+id/reg_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_spinner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="ЗАРЕГИСТРИРОВАТЬСЯ"
+            android:background="@color/colorYellow"
+            android:fontFamily="@font/objectsans_heavy"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

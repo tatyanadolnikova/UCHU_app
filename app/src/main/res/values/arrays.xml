@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="skills">
+        <item>Английский язык</item>
+        <item>Немецкий язык</item>
+        <item>Французский язык</item>
+        <item>Японский язык</item>
+        <item>Итальянский язык</item>
+    </string-array>
+</resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorYellow">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="УЧУ"
+        android:fontFamily="@font/berton_roman_trial"
+        android:textColor="@color/colorBlack"
+        android:textSize="34sp"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/auth_username"/>
+
+    <ImageView
+        android:id="@+id/auth_logo"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/auth_username"
+        android:src="@drawable/circle1"
+        />
+
+    <EditText
+        android:id="@+id/auth_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:hint="электронная почта"
+        android:textSize="20sp"
+        android:fontFamily="@font/b52"
+        android:textColorHint="@color/colorBlack"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/auth_logo"
+        app:layout_constraintBottom_toTopOf="@id/auth_password"
+        />
+
+    <EditText
+        android:id="@+id/auth_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:hint="пароль"
+        android:textSize="20sp"
+        android:fontFamily="@font/b52"
+        android:textColorHint="@color/colorBlack"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_username" />
+
+    <Button
+        android:id="@+id/enter_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:fontFamily="@font/objectsans_heavy"
+        android:textColor="@color/colorBlack"
+        android:background="@color/colorYellow"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_password"/>
+
+    <Button
+        android:id="@+id/i_forgot_password_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:layout_marginTop="24dp"
+        android:text="забыл пароль"
+        android:fontFamily="@font/objectsans_heavy"
+        android:textColor="@color/colorBlack"
+        android:background="@color/colorYellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_password"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
