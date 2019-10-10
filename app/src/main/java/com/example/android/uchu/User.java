@@ -1,22 +1,25 @@
 package com.example.android.uchu;
 
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseUser;
 
 public class User {
+
+    private static FirebaseUser firebaseUser;
+
     private String email = "default email";
     private String password = "default password";
     private String name = "default name";
     private String surname = "default surname";
     private String birthday = "default birthday";
     private String city = "default city";
-    private String skill = "default skill";
+    private int skill = 1;
     private String info = "Добавить информацию о себе.";
-    private ArrayList<Integer> savedContacts;
+
 
     public User() {
     }
 
-    public User(String email, String password, String name, String surname, String birthday, String city, String skill) {
+    public User(String email, String password, String name, String surname, String birthday, String city, int skill) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -26,7 +29,7 @@ public class User {
         this.skill = skill;
     }
 
-    public User(String email, String password, String name, String surname, String birthday, String city, String skill, String info) {
+    public User(String email, String password, String name, String surname, String birthday, String city, int skill, String info) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -61,16 +64,12 @@ public class User {
         return city;
     }
 
-    public String getSkill() {
+    public int getSkill() {
         return skill;
     }
 
     public String getInfo() {
         return info;
-    }
-
-    public ArrayList<Integer> getSavedContacts() {
-        return savedContacts;
     }
 
     public void setEmail(String email) {
@@ -97,7 +96,7 @@ public class User {
         this.city = city;
     }
 
-    public void setSkill(String skill) {
+    public void setSkill(int skill) {
         this.skill = skill;
     }
 
@@ -105,7 +104,11 @@ public class User {
         this.info = info;
     }
 
-    public void setSavedContacts(ArrayList<Integer> savedContacts) {
-        this.savedContacts = savedContacts;
+    public static void setFirebaseUser(FirebaseUser firebaseUser) {
+        User.firebaseUser = firebaseUser;
+    }
+
+    public static FirebaseUser getFirebaseUser() {
+        return firebaseUser;
     }
 }

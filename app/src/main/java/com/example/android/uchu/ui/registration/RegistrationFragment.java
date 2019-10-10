@@ -1,104 +1,69 @@
 package com.example.android.uchu.ui.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.android.uchu.PersonalInfoActivity;
 import com.example.android.uchu.R;
-import com.example.android.uchu.ui.DateMask;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.android.uchu.SearchActivity;
+import com.example.android.uchu.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegistrationFragment extends Fragment {
 
+    private View root;
     private RegistrationViewModel registrationViewModel;
-    private EditText name;
-    private EditText surname;
     private EditText email;
     private EditText password;
-    private EditText city;
-    private EditText birthday;
-    private Spinner skill;
     private Button registerButton;
 
-    private String chosenSkill;
-    private boolean changesAllowed = false;
-
-    private View.OnTouchListener touchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            return false;
-        }
-    };
+    private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         registrationViewModel =
                 ViewModelProviders.of(this).get(RegistrationViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_registration, container, false);
-
-        name = root.findViewById(R.id.reg_name);
-        surname = root.findViewById(R.id.reg_surname);
-        email = root.findViewById(R.id.reg_email);
+        root = inflater.inflate(R.layout.fragment_registration, container, false);
+        email = root.findViewById(R.id.reg_username);
         password = root.findViewById(R.id.reg_password);
-        city = root.findViewById(R.id.reg_city);
-        birthday = root.findViewById(R.id.reg_birthday);
-        skill = root.findViewById(R.id.reg_spinner);
         registerButton = root.findViewById(R.id.reg_button);
-        skill.setOnTouchListener(touchListener);
-        setupSpinner(skill);
-
-        birthday.addTextChangedListener(new DateMask(new DateMask.DateMaskingCallback() {
+        mAuth = FirebaseAuth.getInstance();
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void dateOfBirthValidation(boolean isValid, String dateOfBirth, String error) throws Exception {
-                if (isValid) {
-                    birthday.setText(dateOfBirth);
-                    birthday.setSelection(dateOfBirth.length());
-                } else {
-                    birthday.setError(error);
-                }
-            }
-        }, "."));
+            public void onClick(View v) {
+                final String email_text = email.getText().toString().trim();
+                final String password_text = password.getText().toString().trim();
 
-        return root;
-    }
-
-    private void setupSpinner(Spinner spinner) {
-        ArrayAdapter importanceSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.skills, android.R.layout.simple_spinner_item);
-        importanceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(importanceSpinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    chosenSkill = selection;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                chosenSkill = "Выбрать навык";
+                mAuth.createUserWithEmailAndPassword(email_text, password_text)
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    User.setFirebaseUser(mAuth.getCurrentUser());
+                                    //FirebaseUser u = mAuth.getCurrentUser();
+                                    Intent intent = new Intent(getActivity(), PersonalInfoActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getContext(), "Пользователь существует.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
+        return root;
     }
 }

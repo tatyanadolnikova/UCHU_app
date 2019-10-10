@@ -2,4 +2,17 @@
     <string name="app_name">uchu</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_personal_info">PersonalInfoActivity</string>
+
+    <string name="skill_zero">Выбрать навык</string>
+    <string name="skill_en">Английский язык</string>
+    <string name="skill_ge">Немецкий язык</string>
+    <string name="skill_fr">Французский язык</string>
+    <string name="skill_sp">Испанский язык</string>
+    <string name="skill_it">Итальянский язык</string>
+    <string name="skill_ch">Китайский язык</string>
+    <string name="skill_jp">Японский язык</string>
+
 </resources>
