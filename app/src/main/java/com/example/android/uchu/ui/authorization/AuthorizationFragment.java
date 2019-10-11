@@ -3,11 +3,14 @@ package com.example.android.uchu.ui.authorization;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +43,19 @@ public class AuthorizationFragment extends Fragment {
         passwordEditText = root.findViewById(R.id.auth_password);
         authorizationButton = root.findViewById(R.id.enter_button);
         iForgotPasswordButton = root.findViewById(R.id.i_forgot_password_button);
+
+        passwordEditText.setImeActionLabel("Ok:)", EditorInfo.IME_ACTION_DONE);
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    signIn(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         authorizationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +90,9 @@ public class AuthorizationFragment extends Fragment {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.i("superproverka", "signIn: Успешная аутентификация");
                             Intent intent = new Intent(getActivity(), SearchActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                            getActivity().finish();
                         } else {
                             Log.i("superproverka", "signIn: Вход не выполнен");
                             Toast.makeText(getActivity(), "Пользователь не найден.", Toast.LENGTH_SHORT).show();

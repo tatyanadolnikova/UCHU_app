@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="skills">
+        <item>@string/skill_zero</item>
         <item>@string/skill_en</item>
         <item>@string/skill_ge</item>
         <item>@string/skill_fr</item>

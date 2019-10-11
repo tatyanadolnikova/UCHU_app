@@ -16,8 +16,7 @@ public class User {
     private String info = "Добавить информацию о себе.";
 
 
-    public User() {
-    }
+    public User() {}
 
     public User(String email, String password, String name, String surname, String birthday, String city, int skill) {
         this.email = email;

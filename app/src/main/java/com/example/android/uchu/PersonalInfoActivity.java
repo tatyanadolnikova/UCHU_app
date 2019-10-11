@@ -3,8 +3,11 @@ package com.example.android.uchu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -62,6 +65,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }
             }
         }, "."));
+
+        birthday.setImeActionLabel("Ok:)", EditorInfo.IME_ACTION_DONE);
+
+        birthday.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    addData(name.getText().toString().trim(), surname.getText().toString().trim(),
+                            city.getText().toString().trim(), birthday.getText().toString().trim());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

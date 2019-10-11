@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PersonalInfoActivity">
+    tools:context=".PersonalInfoActivity"
+    style="@style/Theme.AppCompat.Light.DarkActionBar">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/submit_skill_button"
@@ -23,12 +24,14 @@
             android:id="@+id/choose_skill"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Выбери навык"
+            android:text="Укажи свои навыки,\n\nначиная с того, что знаешь\n\nлучше всего"
+
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="46dp"
             android:gravity="center"
             android:textSize="20sp"
+
             android:textColor="@color/colorBlack"
             android:fontFamily="@font/objectsans_heavy"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <Spinner
-            android:id="@+id/choose_spinner"
+            android:id="@+id/choose_spinner_1"
             android:spinnerMode="dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +49,57 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/choose_skill"/>
+
+        <Spinner
+            android:id="@+id/choose_spinner_2"
+            android:visibility="invisible"
+            android:spinnerMode="dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_spinner_1"/>
+
+        <Button
+            android:id="@+id/add_second_skill_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="24sp"
+            android:background="@color/colorYellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/choose_spinner_2"
+            app:layout_constraintBottom_toBottomOf="@id/choose_spinner_2"/>
+
+        <Spinner
+            android:id="@+id/choose_spinner_3"
+            android:visibility="invisible"
+            android:spinnerMode="dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_spinner_2"/>
+
+        <Button
+            android:id="@+id/add_third_skill_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="+"
+            android:textSize="24sp"
+            android:background="@color/colorYellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/choose_spinner_3"
+            app:layout_constraintBottom_toBottomOf="@id/choose_spinner_3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
