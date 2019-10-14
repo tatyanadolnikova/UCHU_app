@@ -2,7 +2,6 @@ package com.example.android.uchu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static DocumentReference mDocRef;
+    public static DocumentReference usersDoc;
     public static FirebaseUser user;
 
     @Override
@@ -26,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            mDocRef = FirebaseFirestore.getInstance().document("users/" + user.getUid());
+            usersDoc = FirebaseFirestore.getInstance().document("users/" + user.getUid());
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();
         } else {
             // No user is signed in
-
             setContentView(R.layout.entrance_activity_main);
             BottomNavigationView navView = findViewById(R.id.nav_view);
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

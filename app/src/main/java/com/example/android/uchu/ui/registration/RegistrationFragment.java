@@ -83,7 +83,7 @@ public class RegistrationFragment extends Fragment {
                             startActivity(intent);
                         } else {
                             KeyboardUtils.hideKeyboard(getActivity());
-                            Toast.makeText(getContext(), "Пользователь существует.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Пользователь зарегистрирован.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -16,6 +16,9 @@ import androidx.navigation.ui.NavigationUI;
 
 public class SearchActivity extends AppCompatActivity {
 
+    public static DocumentReference usersDoc;
+    public static FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +31,8 @@ public class SearchActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //user = FirebaseAuth.getInstance().getCurrentUser();
-        //mDocRef = FirebaseFirestore.getInstance().document("users/" + user.getUid());
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        usersDoc = FirebaseFirestore.getInstance().document("users/" + user.getUid());
     }
 
 }

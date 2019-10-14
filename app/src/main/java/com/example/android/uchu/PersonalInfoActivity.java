@@ -38,15 +38,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public static final String CITY_KEY = "city";
     public static final String BIRTHDAY_KEY = "birthday";
 
-    private DocumentReference mDocRef;
+    public static FirebaseUser user;
+    public static DocumentReference usersDoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
 
-        FirebaseUser user = User.getFirebaseUser();
-        mDocRef = FirebaseFirestore.getInstance().document("users/" + user.getUid());
+        user = User.getFirebaseUser();
+        usersDoc = FirebaseFirestore.getInstance().document("users/" + user.getUid());
 
         name = findViewById(R.id.info_name);
         surname = findViewById(R.id.info_surname);
@@ -101,7 +102,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         data.put(CITY_KEY, city);
         data.put(BIRTHDAY_KEY, birthday);
         Log.i("superproverka", "Добавляем имя " + name + ", фамилию " + surname + " и пр. ...");
-        mDocRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+        usersDoc.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
