@@ -2,41 +2,36 @@ package com.example.android.uchu;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class User {
 
     private static FirebaseUser firebaseUser;
+    public static User currentUser;
 
-    private String email = "default email";
-    private String password = "default password";
-    private String name = "default name";
-    private String surname = "default surname";
-    private String birthday = "default birthday";
-    private String city = "default city";
-    private int skill = 1;
-    private String info = "Добавить информацию о себе.";
+    private String email;
+    private String password;
+    private String name;
+    private String surname;
+    private String birthday;
+    private String city;
+    private ArrayList<String> skills = new ArrayList<>();
+    private String info;
 
 
-    public User() {}
-
-    public User(String email, String password, String name, String surname, String birthday, String city, int skill) {
-        this.email = email;
-        this.password = password;
+    public User(String name, String surname, String birthday, String city) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
         this.city = city;
-        this.skill = skill;
     }
 
-    public User(String email, String password, String name, String surname, String birthday, String city, int skill, String info) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.birthday = birthday;
-        this.city = city;
-        this.skill = skill;
-        this.info = info;
+    public void addSkill(String skill) {
+        this.skills.add(skill);
+    }
+
+    public static FirebaseUser getFirebaseUser() {
+        return firebaseUser;
     }
 
     public String getEmail() {
@@ -63,51 +58,15 @@ public class User {
         return city;
     }
 
-    public int getSkill() {
-        return skill;
+    public ArrayList<String> getSkills() {
+        return skills;
     }
 
     public String getInfo() {
         return info;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setSkill(int skill) {
-        this.skill = skill;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public static void setFirebaseUser(FirebaseUser firebaseUser) {
         User.firebaseUser = firebaseUser;
-    }
-
-    public static FirebaseUser getFirebaseUser() {
-        return firebaseUser;
     }
 }

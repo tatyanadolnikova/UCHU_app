@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,10 +37,10 @@ public class ChooseSkillActivity extends AppCompatActivity {
 
     private List<String> skillSet = new ArrayList<>();
 
+    private FirebaseUser user;
     private DocumentReference skillsDoc;
 
     public static String CHOOSE_SKILL;
-    public static int SKILL_COUNTER = 0;
 
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -53,8 +54,8 @@ public class ChooseSkillActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.submit_skill_button:
-                    submitSkills();
-                    if (SKILL_COUNTER > 0) {
+                    if (skillSet.size() != 0) {
+                        submitSkills();
                         Intent intent = new Intent(ChooseSkillActivity.this, SearchActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -87,17 +88,20 @@ public class ChooseSkillActivity extends AppCompatActivity {
         Log.i("superproverka", "csa");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_skill);
+
         CHOOSE_SKILL = getResources().getString(R.string.skill_zero);
+        user = User.getFirebaseUser();
+
         skillSpinner1 = findViewById(R.id.choose_spinner_1);
         skillSpinner2 = findViewById(R.id.choose_spinner_2);
         skillSpinner3 = findViewById(R.id.choose_spinner_3);
+
         addSecondSkill = findViewById(R.id.add_second_skill_button);
         addThirdSkill = findViewById(R.id.add_third_skill_button);
         submitSkillButton = findViewById(R.id.submit_skill_button);
-        Log.i("superproverka", "views are found");
+
         skillSpinner1.setOnTouchListener(onTouchListener);
         setupSpinner(skillSpinner1);
-        Log.i("superproverka", "setupSpinner(skillSpinner1)");
         addSecondSkill.setOnClickListener(onClickListener);
         addThirdSkill.setOnClickListener(onClickListener);
         submitSkillButton.setOnClickListener(onClickListener);
@@ -116,15 +120,15 @@ public class ChooseSkillActivity extends AppCompatActivity {
                     switch (spinner.getId()) {
                         case R.id.choose_spinner_1:
                             skillSet.add(0, SkillConverter.convertToShortSkill(selection));
-                            Log.i("superproverka", "skillSet[0] = " + SkillConverter.convertToShortSkill(selection));
+                            Log.i("superproverka", "skillSet 0 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                         case R.id.choose_spinner_2:
                             skillSet.add(1, SkillConverter.convertToShortSkill(selection));
-                            Log.i("superproverka", "skillSet[1] = " + SkillConverter.convertToShortSkill(selection));
+                            Log.i("superproverka", "skillSet 1 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                         case R.id.choose_spinner_3:
                             skillSet.add(2, SkillConverter.convertToShortSkill(selection));
-                            Log.i("superproverka", "skillSet[2] = " + SkillConverter.convertToShortSkill(selection));
+                            Log.i("superproverka", "skillSet 2 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                     }
                 }
@@ -143,19 +147,20 @@ public class ChooseSkillActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Log.i("superproverka", "userSkills saved");
+                    Log.i("superproverka", "userSkills saved in users db");
                 } else {
-                    Log.i("superproverka", "userSkills  NOT saved");
+                    Log.i("superproverka", "userSkills  NOT saved in users db");
                 }
             }
         });
 
-        for (String docName : skillSet) {
-            if (docName.equals(CHOOSE_SKILL)) return;
-            SKILL_COUNTER++;
-            skillsDoc = FirebaseFirestore.getInstance().document("languages_sk/" + docName);
+        for (String skillName : skillSet) {
+            if (skillName.equals(CHOOSE_SKILL)) return;
+            skillsDoc = FirebaseFirestore.getInstance().document("skills/" + skillName);
+            Log.i("superproverka", "skillDoc is found");
+
             Map<String, Object> data = new HashMap<>();
-            data.put(PersonalInfoActivity.user.getUid(), skillSet.indexOf(docName));
+            data.put(PersonalInfoActivity.user.getUid(), FirebaseFirestore.getInstance().document("users/" + PersonalInfoActivity.user.getUid()));
             skillsDoc.update(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

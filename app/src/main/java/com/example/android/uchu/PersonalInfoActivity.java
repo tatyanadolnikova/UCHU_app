@@ -101,16 +101,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
         data.put(SURNAME_KEY, surname);
         data.put(CITY_KEY, city);
         data.put(BIRTHDAY_KEY, birthday);
-        Log.i("superproverka", "Добавляем имя " + name + ", фамилию " + surname + " и пр. ...");
+        Log.i("superproverka", "\nname: " + name + "\nsurname: " + surname + "\nbirthday: " + birthday + "\ncity: " + city);
         usersDoc.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Log.i("superproverka", "doc has been saved");
+                    Log.i("superproverka", "userDoc has been saved");
                     Intent intent = new Intent(PersonalInfoActivity.this, ChooseSkillActivity.class);
                     startActivity(intent);
                 } else {
-                    Log.i("superproverka", "doc has NOT been saved");
+                    Log.i("superproverka", "userDoc has NOT been saved");
                 }
             }
         });

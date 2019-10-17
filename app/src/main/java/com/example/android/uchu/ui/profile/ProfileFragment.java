@@ -2,12 +2,15 @@ package com.example.android.uchu.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,12 +19,16 @@ import com.example.android.uchu.MainActivity;
 import com.example.android.uchu.R;
 import com.example.android.uchu.SearchActivity;
 import com.example.android.uchu.SkillConverter;
+import com.example.android.uchu.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,7 +38,7 @@ public class ProfileFragment extends Fragment {
     public static String birthday;
     public static String city;
     public static ArrayList<String> skills;
-    private ProfileViewModel homeViewModel;
+    public ProfileViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,14 +61,17 @@ public class ProfileFragment extends Fragment {
                     surname = documentSnapshot.getString("surname");
                     fullName = name + " " + surname;
                     nameTextView.setText(fullName);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(fullName);
+
                     birthday = documentSnapshot.getString("birthday");
                     birthdayTextView.setText(birthday);
+
                     city = documentSnapshot.getString("city");
                     cityTextView.setText(city);
+
                     skills = (ArrayList<String>) documentSnapshot.get("skills");
                     int skillCount = skills.size();
                     for (int i = 0; i < skillCount; i++) {
-
                         if (i == 0) skill1TextView.setText(SkillConverter.convertToFullSkill(skills.get(i)));
                         else if (i == 1) skill2TextView.setText(SkillConverter.convertToFullSkill(skills.get(i)));
                         else if (i == 2) skill3TextView.setText(SkillConverter.convertToFullSkill(skills.get(i)));

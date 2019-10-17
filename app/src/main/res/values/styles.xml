@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorBlack</item>
         <item name="android:fontFamily">@font/objectsans_heavy</item>
         <item name="android:textColor">@color/colorBlack</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar">
