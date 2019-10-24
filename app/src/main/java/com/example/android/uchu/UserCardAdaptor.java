@@ -39,10 +39,21 @@ public class UserCardAdaptor extends RecyclerView.Adapter<UserCardAdaptor.UserCa
         public ImageView uPhoto;
         public TextView uName;
 
-        public UserCardViewHolder(@NonNull View itemView) {
+        public UserCardViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             uPhoto = itemView.findViewById(R.id.image_rec_view);
             uName = itemView.findViewById(R.id.name_rec_view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -50,7 +61,7 @@ public class UserCardAdaptor extends RecyclerView.Adapter<UserCardAdaptor.UserCa
     @Override
     public UserCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.user_card, parent, false);
-        return new UserCardViewHolder(v);
+        return new UserCardViewHolder(v, listener);
     }
 
     @Override
@@ -66,4 +77,5 @@ public class UserCardAdaptor extends RecyclerView.Adapter<UserCardAdaptor.UserCa
     public int getItemCount() {
         return userList.size();
     }
+
 }

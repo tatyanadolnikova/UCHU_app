@@ -3,6 +3,7 @@ package com.example.android.uchu.ui.authorization;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +22,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.android.uchu.R;
 import com.example.android.uchu.SearchActivity;
+import com.example.android.uchu.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AuthorizationFragment extends Fragment {
 
@@ -31,13 +39,15 @@ public class AuthorizationFragment extends Fragment {
     private EditText passwordEditText;
     private Button authorizationButton;
     private Button iForgotPasswordButton;
+    private ProgressBar progressBar;
+    private View root;
 
     private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ViewModelProviders.of(this).get(AuthorizationViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_authorization, container, false);
+        root = inflater.inflate(R.layout.fragment_authorization, container, false);
         mAuth = FirebaseAuth.getInstance();
         usernameEditText = root.findViewById(R.id.auth_username);
         passwordEditText = root.findViewById(R.id.auth_password);
@@ -77,27 +87,33 @@ public class AuthorizationFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     public void signIn(String email, String password) {
         Log.i("superproverka", "метод signIn");
+        progressBar = root.findViewById(R.id.auth_progressbar);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            User.setFirebaseUser(mAuth.getCurrentUser());
                             Log.i("superproverka", "signIn: Успешная аутентификация");
                             Intent intent = new Intent(getActivity(), SearchActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("auth", true);
                             startActivity(intent);
                             getActivity().finish();
                         } else {
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
                             Log.i("superproverka", "signIn: Вход не выполнен");
                             Toast.makeText(getActivity(), "Пользователь не найден.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
+
 }

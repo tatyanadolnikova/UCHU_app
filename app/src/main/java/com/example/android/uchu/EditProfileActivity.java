@@ -20,10 +20,15 @@ import com.example.android.uchu.ui.profile.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.android.uchu.ChooseSkillActivity.CHOOSE_SKILL;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -35,11 +40,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private Spinner skillSpinner1;
     private Spinner skillSpinner2;
     private Spinner skillSpinner3;
-    private Button addSecondSkill;
-    private Button addThirdSkill;
 
     private int skill_counter = 0;
 
+    private ArrayList<String> skills;
     private ArrayList<String> skillSet = new ArrayList<>();
 
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -94,15 +98,16 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setupSpinner(final Spinner spinner) {
-        ArrayAdapter importanceSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.skills, android.R.layout.simple_spinner_item);
-        importanceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(importanceSpinnerAdapter);
+        if (skills == null) skills = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.skills)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, skills);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection) && !selection.equals(ChooseSkillActivity.CHOOSE_SKILL)) {
+                if (!TextUtils.isEmpty(selection) && !selection.equals(CHOOSE_SKILL)) {
                     switch (spinner.getId()) {
                         case R.id.choose_spinner_1:
                             skillSet.add(0, SkillConverter.convertToShortSkill(selection));
@@ -129,6 +134,7 @@ public class EditProfileActivity extends AppCompatActivity {
             if (skill_counter > 0) {
                 updateData(name.getText().toString().trim(), surname.getText().toString().trim(),
                         city.getText().toString().trim(), birthday.getText().toString().trim());
+                //editSkills();
                 Intent intent = new Intent(EditProfileActivity.this, SearchActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -137,7 +143,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     };
 
-    public void updateData(String name, String surname, String city, String birthday) {
+    public void updateData(final String name, final String surname, final String city, final String birthday) {
         if (name.equals("") || surname.equals("") || city.equals("") || birthday.equals("")) {
             Log.i("superproverka", "Пустое поле");
             Toast.makeText(this, "Заполните все поля.", Toast.LENGTH_SHORT).show();
@@ -148,16 +154,48 @@ public class EditProfileActivity extends AppCompatActivity {
         data.put(PersonalInfoActivity.SURNAME_KEY, surname);
         data.put(PersonalInfoActivity.CITY_KEY, city);
         data.put(PersonalInfoActivity.BIRTHDAY_KEY, birthday);
-        Log.i("superproverka", "Добавляем имя " + name + ", фамилию " + surname + " и пр. ...");
         SearchActivity.usersDoc.update(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Log.i("superproverka", "doc has been saved");
+                    Log.i("superproverka", "doc " + name + " " + surname + " " + city + " " + birthday + " has been saved");
                 } else {
-                    Log.i("superproverka", "doc has NOT been saved");
+                    Log.i("superproverka", "doc " + name + " " + surname + " " + city + " " + birthday + " has NOT been saved");
                 }
             }
         });
+    }
+
+    private void editSkills() {
+        Log.i("superproverka", "editing skills");
+        Map<String, Object> userSkills = new HashMap<>();
+        userSkills.put("skills", skillSet);
+        SearchActivity.usersDoc.update(userSkills).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.i("superproverka", "userSkills edited in users db");
+                } else {
+                    Log.i("superproverka", "userSkills  NOT edited in users db");
+                }
+            }
+        });
+
+        for (String skillName : skillSet) {
+            if (skillName.equals(CHOOSE_SKILL)) return;
+            DocumentReference skillsDoc = FirebaseFirestore.getInstance().document("skills/" + skillName);
+            Map<String, Object> data = new HashMap<>();
+            data.put(SearchActivity.user.getUid(), FirebaseFirestore.getInstance().document("users/" + SearchActivity.user.getUid()));
+            skillsDoc.update(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.i("superproverka", "skillDoc edited");
+                    } else {
+                        Log.i("superproverka", "skillDoc NOT edited");
+                    }
+                }
+            });
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private EditText city;
     private EditText birthday;
     private FloatingActionButton fab;
+    private ProgressBar progressBar;
 
     public static final String NAME_KEY = "name";
     public static final String SURNAME_KEY = "surname";
@@ -91,8 +93,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void addData(String name, String surname, String city, String birthday) {
+        progressBar = findViewById(R.id.reg_progressbar);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
         if (name.equals("") || surname.equals("") || city.equals("") || birthday.equals("")) {
             Log.i("superproverka", "Пустое поле");
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
             Toast.makeText(this, "Заполните все поля.", Toast.LENGTH_SHORT).show();
             return ;
         }

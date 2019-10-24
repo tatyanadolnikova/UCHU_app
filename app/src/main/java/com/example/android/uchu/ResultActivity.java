@@ -3,7 +3,8 @@ package com.example.android.uchu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,19 +21,21 @@ import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity implements UserCardAdaptor.OnItemClickListener {
 
+    private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private UserCardAdaptor userCardAdaptor;
     private ArrayList<UserCard> userList;
     private String chosenSkill;
     private Map<String, Object> map;
     private DocumentReference skillsDoc;
-    private String fullName;
     private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        progressBar = findViewById(R.id.search_progressbar);
+        progressBar.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         chosenSkill = SkillConverter.convertToShortSkill(intent.getStringExtra("chosenSkill"));
         getSupportActionBar().setTitle("Поиск: " + intent.getStringExtra("chosenSkill"));
@@ -40,28 +43,31 @@ public class ResultActivity extends AppCompatActivity implements UserCardAdaptor
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         findDataInFirebaseFirestore();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void findDataInFirebaseFirestore() {
         map = new HashMap<>();
         userList = new ArrayList<>();
-        fullName = "ALISA";
-        skillsDoc = FirebaseFirestore.getInstance().document("languages_sk/" + chosenSkill);
+        skillsDoc = FirebaseFirestore.getInstance().document("skills/" + chosenSkill);
+
         skillsDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot skillsSnapshot) {
-                if (skillsSnapshot.exists()) {
-                    map = skillsSnapshot.getData();
-                    for (Map.Entry<String, Object> entry : map.entrySet()) {
-                        i++;
-                        DocumentReference userDoc = FirebaseFirestore.getInstance().document("users/" + entry.getKey());
-                        userDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.i("superproverka", documentSnapshot.getData().toString());
+                Map<String, Object> map = documentSnapshot.getData();
+                for(Map.Entry<String, Object> entry : map.entrySet()) {
+                    final String userId = entry.getKey();
+                    if (!userId.equals(User.getFirebaseUser().getUid())) {
+                        DocumentReference mRef = (DocumentReference) entry.getValue();
+                        mRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
-                            public void onSuccess(DocumentSnapshot userSnapshot) {
-                                fullName = userSnapshot.getString("name") + " "
-                                        + userSnapshot.getString("surname");
-                                userList.add(new UserCard("https://cdn.pixabay.com/photo/2019/09/13/15/13/chicken-4474176_1280.jpg", fullName));
-                                if (i == map.size()) {
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    String name = documentSnapshot.getString("name")
+                                            + " "
+                                            + documentSnapshot.getString("surname");
+                                    userList.add(new UserCard("http://st.gde-fon.com/wallpapers_original/342238_rebyonok_devochka_xvostiki_ulybka_radost_5000x3333_www.Gde-Fon.com.jpg", name, userId));
                                     userCardAdaptor = new UserCardAdaptor(ResultActivity.this, userList);
                                     recyclerView.setAdapter(userCardAdaptor);
                                     userCardAdaptor.setOnItemClickListener(ResultActivity.this);
@@ -76,13 +82,13 @@ public class ResultActivity extends AppCompatActivity implements UserCardAdaptor
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "нажали на " + position + "карточку", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, UserActivity.class);
         UserCard clickedItem = userList.get(position);
-
-        intent.putExtra("name", clickedItem.getuName());
+        Log.i("superproverka", "User " + clickedItem.getuName() + " is selected");
+        Log.i("superproverka", "User id: " + clickedItem.getUserId());
+        intent.putExtra("fullname", clickedItem.getuName());
         intent.putExtra("url", clickedItem.getImageUrl());
-
+        intent.putExtra("id", clickedItem.getUserId());
         startActivity(intent);
     }
 }

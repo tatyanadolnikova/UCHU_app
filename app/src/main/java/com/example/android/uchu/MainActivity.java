@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            User.setFirebaseUser(user);
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();

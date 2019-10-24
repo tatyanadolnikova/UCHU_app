@@ -1,4 +1,4 @@
-package com.example.android.uchu.ui.dashboard;
+package com.example.android.uchu.ui.search;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

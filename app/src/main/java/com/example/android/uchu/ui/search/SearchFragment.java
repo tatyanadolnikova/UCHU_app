@@ -1,4 +1,4 @@
-package com.example.android.uchu.ui.dashboard;
+package com.example.android.uchu.ui.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ import com.example.android.uchu.ResultActivity;
 public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private SearchViewModel searchViewModel;
+    private View root;
     private Spinner searchSpinner;
     private Button searchButton;
     private String chosenSkill = "";
@@ -32,7 +33,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                              ViewGroup container, Bundle savedInstanceState) {
         searchViewModel =
                 ViewModelProviders.of(this).get(SearchViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_search, container, false);
+        root = inflater.inflate(R.layout.fragment_search, container, false);
         CHOOSE_SKILL = getResources().getString(R.string.skill_zero);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Поиск");
         searchSpinner = root.findViewById(R.id.search_spinner);

@@ -69,4 +69,6 @@ public class User {
     public static void setFirebaseUser(FirebaseUser firebaseUser) {
         User.firebaseUser = firebaseUser;
     }
+
+
 }

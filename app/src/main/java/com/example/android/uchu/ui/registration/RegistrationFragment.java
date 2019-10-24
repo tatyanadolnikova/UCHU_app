@@ -81,6 +81,7 @@ public class RegistrationFragment extends Fragment {
                             User.setFirebaseUser(mAuth.getCurrentUser());
                             Intent intent = new Intent(getActivity(), PersonalInfoActivity.class);
                             startActivity(intent);
+                            getActivity().finish();
                         } else {
                             KeyboardUtils.hideKeyboard(getActivity());
                             Toast.makeText(getContext(), "Пользователь зарегистрирован.", Toast.LENGTH_SHORT).show();

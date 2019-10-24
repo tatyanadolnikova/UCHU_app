@@ -1,5 +1,6 @@
 package com.example.android.uchu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +40,7 @@ public class ChooseSkillActivity extends AppCompatActivity {
     private Button addThirdSkill;
 
     private List<String> skillSet = new ArrayList<>();
-
-    private FirebaseUser user;
+    private ArrayList<String> skills;
     private DocumentReference skillsDoc;
 
     public static String CHOOSE_SKILL;
@@ -57,13 +60,15 @@ public class ChooseSkillActivity extends AppCompatActivity {
                     if (skillSet.size() != 0) {
                         submitSkills();
                         Intent intent = new Intent(ChooseSkillActivity.this, SearchActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("reg", true);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        finish();
+                        finishAffinity();
                     }
                     break;
                 case R.id.add_second_skill_button:
-                    if (!skillSet.get(0).equals(CHOOSE_SKILL)) {
+                    if (skillSet.size() == 1) {
                         addSecondSkill.setVisibility(View.INVISIBLE);
                         skillSpinner2.setVisibility(View.VISIBLE);
                         addThirdSkill.setVisibility(View.VISIBLE);
@@ -72,7 +77,7 @@ public class ChooseSkillActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.add_third_skill_button:
-                    if (!skillSet.get(1).equals(CHOOSE_SKILL)) {
+                    if (skillSet.size() == 2) {
                         addThirdSkill.setVisibility(View.INVISIBLE);
                         skillSpinner3.setVisibility(View.VISIBLE);
                         skillSpinner3.setOnTouchListener(onTouchListener);
@@ -90,7 +95,6 @@ public class ChooseSkillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_skill);
 
         CHOOSE_SKILL = getResources().getString(R.string.skill_zero);
-        user = User.getFirebaseUser();
 
         skillSpinner1 = findViewById(R.id.choose_spinner_1);
         skillSpinner2 = findViewById(R.id.choose_spinner_2);
@@ -108,10 +112,11 @@ public class ChooseSkillActivity extends AppCompatActivity {
     }
 
     private void setupSpinner(final Spinner spinner) {
-        ArrayAdapter importanceSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.skills, android.R.layout.simple_spinner_item);
-        importanceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(importanceSpinnerAdapter);
+        if (skills == null) skills = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.skills)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, skills);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -120,14 +125,17 @@ public class ChooseSkillActivity extends AppCompatActivity {
                     switch (spinner.getId()) {
                         case R.id.choose_spinner_1:
                             skillSet.add(0, SkillConverter.convertToShortSkill(selection));
+                            skills.remove(position);
                             Log.i("superproverka", "skillSet 0 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                         case R.id.choose_spinner_2:
                             skillSet.add(1, SkillConverter.convertToShortSkill(selection));
+                            skills.remove(position);
                             Log.i("superproverka", "skillSet 1 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                         case R.id.choose_spinner_3:
                             skillSet.add(2, SkillConverter.convertToShortSkill(selection));
+                            skills.remove(position);
                             Log.i("superproverka", "skillSet 2 = " + SkillConverter.convertToShortSkill(selection));
                             break;
                     }
@@ -135,7 +143,8 @@ public class ChooseSkillActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -146,7 +155,7 @@ public class ChooseSkillActivity extends AppCompatActivity {
         PersonalInfoActivity.usersDoc.update(userSkills).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Log.i("superproverka", "userSkills saved in users db");
                 } else {
                     Log.i("superproverka", "userSkills  NOT saved in users db");
@@ -157,8 +166,6 @@ public class ChooseSkillActivity extends AppCompatActivity {
         for (String skillName : skillSet) {
             if (skillName.equals(CHOOSE_SKILL)) return;
             skillsDoc = FirebaseFirestore.getInstance().document("skills/" + skillName);
-            Log.i("superproverka", "skillDoc is found");
-
             Map<String, Object> data = new HashMap<>();
             data.put(PersonalInfoActivity.user.getUid(), FirebaseFirestore.getInstance().document("users/" + PersonalInfoActivity.user.getUid()));
             skillsDoc.update(data).addOnCompleteListener(new OnCompleteListener<Void>() {

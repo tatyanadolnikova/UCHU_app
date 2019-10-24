@@ -8,95 +8,93 @@
     tools:context=".UserActivity"
     tools:showIn="@layout/activity_user">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbarStyle="insideOverlay">
 
-        <TextView
-            android:id="@+id/profile_birthday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_name"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:text="20.01.1992"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/profile_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_birthday"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_birthday"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:text="Челябинск"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/profile_skills_definition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_city"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:text="Навыки"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_skills_definition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_city"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:text="Навыки"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/profile_skill_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_skills_definition"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_skill_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_skills_definition"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:text="Английский язык"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/profile_skill_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_skill_1"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_skill_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_skill_1"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/profile_skill_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_skill_2"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/leosler_rough_light" />
+            <TextView
+                android:id="@+id/user_skill_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_skill_2"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/leosler_rough_light"
+                android:textSize="24sp" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

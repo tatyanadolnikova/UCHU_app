@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.android.uchu.ui.dashboard.SearchFragment"
+        android:name="com.example.android.uchu.ui.search.SearchFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_search" />
 
