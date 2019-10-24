@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".FaqActivity">
+
+    <!--<com.github.florent37.shapeofview.shapes.ArcView
+        android:id="@+id/faq_arcview"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:elevation="4dp"
+        app:shape_arc_cropDirection="outside"
+        app:shape_arc_height="10dp"
+        app:shape_arc_position="bottom"
+        android:background="@null">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorYellow"/>
+
+        <ImageButton
+            android:id="@+id/faq_back_button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/back_button"
+            android:layout_gravity="start"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="18dp"
+            android:background="@null"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="FAQ"
+            android:textSize="22sp"
+            android:gravity="center"/>
+
+    </com.github.florent37.shapeofview.shapes.ArcView>-->
+
+    <include layout="@layout/arcview"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp">
+
+        <ExpandableListView
+            android:id="@+id/faq_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:choiceMode="multipleChoice"
+            android:dividerHeight="3dp">
+        </ExpandableListView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

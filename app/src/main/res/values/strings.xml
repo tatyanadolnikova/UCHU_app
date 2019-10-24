@@ -18,5 +18,36 @@
 
     <string name="action_settings">Настройки</string>
     <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_faq">FaqActivity</string>
+
+    <!-- FAQ -->
+    <string name="faq_email">tatyanabulakhova@yandex.ru</string>
+    <string name="faq_1">Что такое UCHU?</string>
+    <string name="faq_1_answer">Это платформа, которая позволяет познакомиться с людьми, обладающих какими-то знаниями.UCHU можно использовать для интеллектуального обмена: например, Вы на высоком уровне умеете
+        говорить на французском языке и хотите научиться печь пирожные. На платформе Вы сможете найти именно того, кто вам нужен — пекарь, мечтающий говорить по-французски! Так что вперед!
+    </string>
+    <string name="faq_2">Не могу найти человека, который знает то, что мне интересно.</string>
+    <string name="faq_2_answer">В таком случае заходи на главную страницу и подписывайся на рассылку. Как только на платформе появится тот, кто Вам нужен, мы пришлем на электронную почту уведомление.</string>
+    <string name="faq_3">В UCHU нет необходимого мне навыка.</string>
+    <string name="faq_3_answer">Наша база навыков растет благодаря Вам. Напишите нам \"Я хочу [что-то уметь]\" или \"Я умею [что-то делать]\".</string>
+    <string name="faq_4">Это бесплатно?</string>
+    <string name="faq_4_answer">Да.</string>
+    <string name="faq_5">У меня остались вопросы.</string>
+    <string name="faq_5_answer">Нажимайте на кнопу "Связаться" и эксперты UCHU оперативно с Вами свяжутся.</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Приватность</string>
+    <string name="sync_header">Уведомления</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Скрыть почту</string>
+    <string name="reply_title">Скрыть номер телефона</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Общая рассылка</string>
+    <string name="attachment_title">Уведомления о новых пользователях</string>
+    <string name="attachment_summary_on">Включить еженедельную рассылку</string>
+    <string name="attachment_summary_off">Еженедельная рассылка включена</string>
 
 </resources>

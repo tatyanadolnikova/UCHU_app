@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.uchu.EditProfileActivity">
     <item
-        android:id="@+id/menu_exit"
+        android:id="@+id/no_menu_exit"
         android:orderInCategory="100"
         android:title="Выйти"
         app:showAsAction="always" />
